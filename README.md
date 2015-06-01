@@ -1,8 +1,13 @@
 # serial_commander
 
-Simple serial communication utility for sending command and receive response.
+Simple serial communication utility for sending command and receiving response.
 
-Can be utilized in embedded device development which has serial port for debugging and busybox.
+Can be utilized some kind of automation in embedded device development which has serial port for debugging and busybox.
+
+Main idea is to append string prefix for command's response as described in next link.
+
+http://serverfault.com/questions/72744/command-to-prepend-string-to-each-line
+
 
 ## Install
 
@@ -12,7 +17,7 @@ $ git clone https://github.com/swcho/serial_commander.git; cd serial_commander; 
 
 ## Usages in shell command
 
-Send "ll" command for listing files through "/dev/ttyS0" port and print response and finish
+Below example shows sending "ll" command for listing files through "/dev/ttyS0" port and print response and finish.
 
 ```
 $ sudo ./serial_commander.js --port /dev/ttyS0 -c "ll"
@@ -48,6 +53,13 @@ drwxr-xr-x root     root              1970-01-01 08:00 system
 -rw-r--r-- root     root         4086 1970-01-01 08:00 ueventd.rc
 lrwxrwxrwx root     root              1970-06-09 17:31 vendor -> /system/vendor
 $ 
+```
+
+But, you can use serial_commander as serial console if -c option is not provided as below
+
+```
+$ sudo ./serial_commander.js --port /dev/ttyS0
+[interactive mode...]
 ```
 
 ## Usages programatically

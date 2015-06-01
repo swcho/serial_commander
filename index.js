@@ -1,14 +1,9 @@
 
-var argv = require('optimist')
-    .alias('c', 'command')
-    .argv;
+var serialport = require('serialport');
 
-var serialport = require("serialport");
-var sp = new serialport.SerialPort("/dev/ttyS0", {
-    baudrate: 115200
-});
-
+var sp;
 var MARK_COMMAND_START = 'COMMAND_START';
+var MARK_COMMAND_RESP = 'COMMAND_RESP:';
 var MARK_COMMAND_END = 'COMMAND_END';
 
 function data_to_line(processLine) {
@@ -24,24 +19,31 @@ function data_to_line(processLine) {
     };
 }
 
-function run_command(command) {
-    console.log('Run Command: ', command);
-
+function run_command(command, resp_cb) {
     var response_start = false;
 
     sp.on('data', data_to_line(function(line) {
-        var trimmed = line.trim();
-        if (trimmed == MARK_COMMAND_START) {
+        //var trimmed = line.trim();
+        if (line.indexOf(MARK_COMMAND_START) == 0) {
             response_start = true;
-        } else if (trimmed == MARK_COMMAND_END) {
+        } else if (line.indexOf(MARK_COMMAND_END) == 0) {
             process.exit();
         } else if (response_start) {
-            console.log(trimmed);
+            if (line.indexOf(MARK_COMMAND_RESP) == 0) {
+                resp_cb(line.replace(MARK_COMMAND_RESP, ''));
+            }
         }
     }));
 
-    sp.write('echo ' + MARK_COMMAND_START + '; ' + command + '; echo ' + MARK_COMMAND_END + '; \n', function() {
+    sp.write('echo ' + MARK_COMMAND_START + '; ' + command + ' | awk \'{print "' + MARK_COMMAND_RESP + '"$0}\'; echo ' + MARK_COMMAND_END + '; \n', function() {
 
+    });
+}
+
+function run_command_mode(command) {
+    console.log('Run Command: ', command);
+    run_command(command, function(line) {
+        console.log(line);
     });
 }
 
@@ -64,13 +66,13 @@ function run_interactive_mode() {
     });
 }
 
-sp.on('open', function() {
+exports.init = function(port, init) {
+    sp = new serialport.SerialPort(port, {
+        baudrate: 115200
+    });
+    sp.on('open', init);
+};
 
-    if (argv.c) {
-        run_command(argv.c);
-    } else {
-        run_interactive_mode()
-    }
-
-});
-
+exports.run_command_mode = run_command_mode;
+exports.run_interactive_mode = run_interactive_mode;
+exports.run_command = run_command;

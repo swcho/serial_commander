@@ -13,8 +13,41 @@ $ git clone https://github.com/swcho/serial_commander.git; cd serial_commander; 
 ## Usages in shell command
 
 Send "ll" command for listing files through "/dev/ttyS0" port and print response and finish
-```shell
-sudo ./serial_commander.js --port /dev/ttyS0 -c "ll"
+
+```
+$ sudo ./serial_commander.js --port /dev/ttyS0 -c "ll"
+drwxr-xr-x root     root              1970-06-09 17:31 acct
+drwxr-xr-x root     root              1970-01-01 08:00 backup
+drwxr-xr-x root     root              1970-01-01 08:00 boot
+drwxrwx--- system   cache             1970-06-09 18:42 cache
+dr-x------ root     root              1970-06-09 17:31 config
+lrwxrwxrwx root     root              1970-06-09 17:31 d -> /sys/kernel/debug
+drwxrwx--x system   system            2015-04-07 14:00 data
+-rw-r--r-- root     root          120 1970-01-01 08:00 default.prop
+drwxr-xr-x root     root              1970-06-09 17:31 dev
+lrwxrwxrwx root     root              1970-06-09 17:31 etc -> /system/etc
+-rw-r--r-- root     root         9527 1970-01-01 08:00 file_contexts
+-rwxr-x--- root     root       467692 1970-01-01 08:00 init
+-rwxr-x--- root     root          663 1970-01-01 08:00 init.connectivity.rc
+-rwxr-x--- root     root          919 1970-01-01 08:00 init.environ.rc
+-rwxr-x--- root     root        19861 1970-01-01 08:00 init.rc
+-rwxr-x--- root     root         1795 1970-01-01 08:00 init.trace.rc
+-rwxr-x--- root     root         3915 1970-01-01 08:00 init.usb.rc
+drwxrwxr-x root     system            1970-06-09 17:31 mnt
+dr-xr-xr-x root     root              1970-01-01 08:00 proc
+-rw-r--r-- root     root         2161 1970-01-01 08:00 property_contexts
+drwx------ root     root              2015-04-02 14:29 root
+drwxr-x--- root     root              1970-01-01 08:00 sbin
+lrwxrwxrwx root     root              1970-06-09 17:31 sdcard -> /storage/emulated/legacy
+-rw-r--r-- root     root          656 1970-01-01 08:00 seapp_contexts
+-rw-r--r-- root     root        75478 1970-01-01 08:00 sepolicy
+drwxr-x--x root     sdcard_r          1970-06-09 17:31 storage
+drwx------ root     root              1970-06-09 17:32 swap_zram0
+dr-xr-xr-x root     root              1970-06-09 17:31 sys
+drwxr-xr-x root     root              1970-01-01 08:00 system
+-rw-r--r-- root     root         4086 1970-01-01 08:00 ueventd.rc
+lrwxrwxrwx root     root              1970-06-09 17:31 vendor -> /system/vendor
+$ 
 ```
 
 ## Usages programatically

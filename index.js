@@ -19,7 +19,7 @@ function data_to_line(processLine) {
     };
 }
 
-function run_command(command, resp_cb) {
+function run_command(command, resp_cb, finish_cb) {
     var response_start = false;
 
     sp.on('data', data_to_line(function(line) {
@@ -27,7 +27,7 @@ function run_command(command, resp_cb) {
         if (line.indexOf(MARK_COMMAND_START) == 0) {
             response_start = true;
         } else if (line.indexOf(MARK_COMMAND_END) == 0) {
-            process.exit();
+            finish_cb();
         } else if (response_start) {
             if (line.indexOf(MARK_COMMAND_RESP) == 0) {
                 resp_cb(line.replace(MARK_COMMAND_RESP, ''));
@@ -44,6 +44,8 @@ function run_command_mode(command) {
     console.log('Run Command: ', command);
     run_command(command, function(line) {
         console.log(line);
+    }, function() {
+        process.exit();
     });
 }
 

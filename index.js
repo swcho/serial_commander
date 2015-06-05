@@ -94,7 +94,12 @@ exports.init = function(port, init) {
     sp = new serialport.SerialPort(port, {
         baudrate: 115200
     });
-    sp.on('open', init);
+    sp.on('open', function() {
+        var args = arguments;
+        sp.flush(function() {
+            init.apply(this, args);
+        });
+    });
 };
 
 exports.run_command_mode = run_command_mode;

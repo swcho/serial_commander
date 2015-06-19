@@ -95,6 +95,16 @@ function run_interactive_mode() {
     });
 }
 
+function on_data(data_handler) {
+    sp.on('data', function(data) {
+        data_handler(data);
+    });
+}
+
+function on_line(line_handler) {
+    sp.on('data', data_to_line(line_handler));
+}
+
 exports.init = function(port, init) {
     sp = new serialport.SerialPort(port, {
         baudrate: 115200
@@ -102,6 +112,9 @@ exports.init = function(port, init) {
     sp.on('open', function() {
         var args = arguments;
         sp.flush(function() {
+            sp.on('data', function(data) {
+                process.stdout.write(data);
+            });
             init.apply(this, args);
         });
     });
@@ -110,3 +123,5 @@ exports.init = function(port, init) {
 exports.run_command_mode = run_command_mode;
 exports.run_interactive_mode = run_interactive_mode;
 exports.run_command = run_command;
+exports.on_data = on_data;
+exports.on_line = on_line;

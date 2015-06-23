@@ -112,9 +112,9 @@ exports.init = function(port, init) {
     sp.on('open', function() {
         var args = arguments;
         sp.flush(function() {
-            sp.on('data', function(data) {
-                process.stdout.write(data);
-            });
+            //sp.on('data', function(data) {
+            //    process.stdout.write(data);
+            //});
             init.apply(this, args);
         });
     });

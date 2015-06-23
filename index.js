@@ -76,6 +76,10 @@ function run_command_mode(command) {
     );
 }
 
+function send_command(command, cb) {
+    sp.write(command + '\n', cb);
+}
+
 function run_interactive_mode() {
     sp.on('data', function(data) {
         process.stdout.write(data);
@@ -123,5 +127,6 @@ exports.init = function(port, init) {
 exports.run_command_mode = run_command_mode;
 exports.run_interactive_mode = run_interactive_mode;
 exports.run_command = run_command;
+exports.send_command = send_command;
 exports.on_data = on_data;
 exports.on_line = on_line;

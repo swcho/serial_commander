@@ -20,6 +20,25 @@ function data_to_line(processLine) {
     };
 }
 
+function data_to_line_emit() {
+    var backlog = '';
+    var processLine;
+    sp.on('data', function(data) {
+        backlog += data;
+        var n = backlog.indexOf('\n');
+        while (~n) {
+            if (processLine) {
+                processLine(backlog.substring(0, n));
+            }
+            backlog = backlog.substring(n + 1);
+            n = backlog.indexOf('\n');
+        }
+    });
+    return function(handler) {
+        processLine = handler;
+    };
+}
+
 function run_command(command, resp_cb, err_resp_cb, finish_cb, debug) {
     var response_start = false;
 
@@ -78,6 +97,7 @@ function run_command_mode(command) {
 
 function send_command(command, cb) {
     sp.write(command + '\n', cb);
+    return data_to_line_emit();
 }
 
 function run_interactive_mode() {

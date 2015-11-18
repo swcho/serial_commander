@@ -15,10 +15,6 @@ if (!argv.p) {
     printUsage();
 }
 
-if (!argv.c) {
-    printUsage();
-}
-
 api.init(argv.p, function() {
     if (argv.c) {
         api.run_command_mode(argv.c);

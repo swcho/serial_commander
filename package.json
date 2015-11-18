@@ -2,9 +2,13 @@
   "name": "serial_commander",
   "version": "1.0.0",
   "description": "Serial command helper",
+  "preferGlobal": true,
   "main": "index.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "bin": {
+    "serial-commander": "./serial-commander"
   },
   "author": "",
   "license": "ISC",

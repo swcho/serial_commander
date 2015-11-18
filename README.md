@@ -15,6 +15,12 @@ http://serverfault.com/questions/72744/command-to-prepend-string-to-each-line
 $ git clone https://github.com/swcho/serial_commander.git; cd serial_commander; npm install
 ```
 
+or
+
+```shell
+$ npm install -g swcho/serial_commander
+```
+
 ## Usages in shell command
 
 Below example shows sending "ll" command for listing files through "/dev/ttyS0" port and print response and finish.

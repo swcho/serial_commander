@@ -6,6 +6,18 @@ var argv = require('optimist')
     .alias('c', 'command')
     .argv;
 
+function printUsage() {
+    console.log('serial-commander -p /dev/ttyUSB0 -c ls');
+    process.exit();
+}
+
+if (!argv.p) {
+    printUsage();
+}
+
+if (!argv.c) {
+    printUsage();
+}
 
 api.init(argv.p, function() {
     if (argv.c) {

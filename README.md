@@ -60,6 +60,10 @@ drwxr-xr-x root     root              1970-01-01 08:00 system
 lrwxrwxrwx root     root              1970-06-09 17:31 vendor -> /system/vendor
 $ 
 ```
+With u[ntil] option, you can run command and print all output until designated regular expression pattern.
+```
+$ sudo ./serial_commander.js --port /dev/ttyS0 -c "ll" -u "^$"
+```
 
 But, you can use serial_commander as serial console if -c option is not provided as below
 
